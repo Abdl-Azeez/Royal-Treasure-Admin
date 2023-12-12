@@ -37,7 +37,7 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
           <div className="nk-header-brand d-xl-none">
             <Logo />
           </div>
-          <div className="d-flex justify-content-center position-relative ml-2 font-weight-bold" >User Pending Review: <p className="text-danger font-weight-bold ml-1">(0)</p></div>
+          <div className="d-flex justify-content-center position-relative ml-2 font-weight-bold" >User Pending Review: <p className="text-danger font-weight-bold ml-1">(17)</p></div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
 

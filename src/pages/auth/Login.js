@@ -54,7 +54,7 @@ const Login = () => {
               <BlockContent>
                 <BlockTitle tag="h4">Sign-In</BlockTitle>
                 <BlockDes>
-                  <p>IDRT Dashboard.</p>
+                  <p>ROYAL-TREASURE Dashboard.</p>
                 </BlockDes>
               </BlockContent>
             </BlockHead>

@@ -21,6 +21,9 @@ import {
   DataTableItem,
   DataTableTitle,
 } from "../components/table/DataTable";
+import Sidebar from "./sidebar/Sidebar";
+import { OverlineTitle } from "./text/Text";
+import UserAvatar from "./user/UserAvatar";
 
 export {
   Button,
@@ -46,4 +49,7 @@ export {
   DataTable,
   DataTableTitle,
   PreviewAltCard,
+  Sidebar,
+  OverlineTitle,
+  UserAvatar
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 const Content = ({ ...props }) => {
   return (
-    <div className="nk-content">
+    <div className="nk-content" style={{ zIndex: '99' }}>
       <div className="container-fluid">
         <div className="nk-content-inner">
           <div className="nk-content-body">

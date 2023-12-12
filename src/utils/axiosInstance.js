@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const checkAuthTokens = () => {
-  // console.log(localStorage.getItem("idrtToken"));
-  let authTokens = localStorage.getItem("idrtToken") ? JSON.parse(localStorage.getItem("idrtToken")) : null;
+  // console.log(localStorage.getItem("ROYAL-TREASUREToken"));
+  let authTokens = localStorage.getItem("ROYAL-TREASUREToken") ? JSON.parse(localStorage.getItem("ROYAL-TREASUREToken")) : null;
 
   return authTokens;
 };
@@ -36,13 +36,13 @@ axiosInstance.interceptors.request.use(async (req) => {
 //           const rs = await refreshToken();
 //           if (rs) {
 //             const { result } = rs.data;
-//             localStorage.setItem("idrtToken", JSON.stringify(result));
+//             localStorage.setItem("ROYAL-TREASUREToken", JSON.stringify(result));
 //             axiosInstance.defaults.headers.Authorization = `Bearer ${result?.access_token}`;
 //             return axiosInstance(originalConfig);
 //           }
 //         } catch (_error) {
 //           console.log(_error)
-//           // localStorage.removeItem("idrtToken");
+//           // localStorage.removeItem("ROYAL-TREASUREToken");
 //           window.location.href = "/login";
 //           if (_error.response && _error.response.data) {
 //             return Promise.reject(_error.response.data);
@@ -56,9 +56,9 @@ axiosInstance.interceptors.request.use(async (req) => {
 // );
 
 async function refreshToken() {
-  if (localStorage.getItem("idrtToken")) {
+  if (localStorage.getItem("ROYAL-TREASUREToken")) {
     const result = await axiosInstance.post("/auth/refreshToken", {
-      refreshToken: JSON.parse(localStorage.getItem("idrtToken")).refreshToken,
+      refreshToken: JSON.parse(localStorage.getItem("ROYAL-TREASUREToken")).refreshToken,
     });
     return result;
   } else {

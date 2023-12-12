@@ -71,7 +71,7 @@ const Auth = (state = initialState, action) => {
       break;
 
     case AUTH_ERROR:
-      localStorage.removeItem("idrtToken");
+      localStorage.removeItem("ROYAL-TREASUREToken");
       state = {
         ...state,
         user: null,

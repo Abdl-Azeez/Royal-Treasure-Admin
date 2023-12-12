@@ -1,10 +1,10 @@
-**Documentation for IDRT Admin dashboard**
+**Documentation for ROYAL-TREASURE Admin dashboard**
 
-# IDRT-dashboard
+# ROYAL-TREASURE-dashboard
 
-Admin Dashboard for IDRT :---| :---|
+Admin Dashboard for ROYAL-TREASURE :---| :---|
 
-Project Name: IDRT
+Project Name: ROYAL-TREASURE
 Version: 1.40.00
 Date: 23-11-2023
 

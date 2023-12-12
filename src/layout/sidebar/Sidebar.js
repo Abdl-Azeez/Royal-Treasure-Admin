@@ -32,7 +32,7 @@ const Sidebar = ({ fixed, theme, className, sidebarToggle, mobileView, ...props 
       <div className="nk-sidebar-element nk-sidebar-head">
         <div className="nk-sidebar-brand">
           {/* <Logo /> */}
-          <h5 className="title">IDRT Payment Gateway</h5>
+          <h6 className="title">ROYAL TREASURE ADMIN PANEL</h6>
 
         </div>
         <div className="nk-menu-trigger mr-n2">

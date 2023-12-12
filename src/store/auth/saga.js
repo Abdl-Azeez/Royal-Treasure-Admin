@@ -21,8 +21,8 @@ function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(LoginService, user);
     // console.log(user);
-    localStorage.setItem("idrtToken", JSON.stringify(response.data));
-    localStorage.setItem("idrtUsername", JSON.stringify(user.name));
+    localStorage.setItem("ROYAL-TREASUREToken", JSON.stringify(response.data));
+    localStorage.setItem("ROYAL-TREASUREUsername", JSON.stringify(user.name));
     document.cookie = JSON.stringify(response.data.access_token);
     yield put(loginUserSuccessful(response.data));
     // history.push("/");
@@ -35,8 +35,8 @@ function* loginUser({ payload: { user, history } }) {
 function* logoutUser({ payload: { history } }) {
   try {
 
-    localStorage.removeItem("idrtToken");
-    localStorage.removeItem("idrtUsername");
+    localStorage.removeItem("ROYAL-TREASUREToken");
+    localStorage.removeItem("ROYAL-TREASUREUsername");
     yield put(logoutUserSuccess());
     history.push("/login");
   } catch (error) {

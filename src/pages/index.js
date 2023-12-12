@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
 import { Card, Button, Modal, ModalBody, ModalHeader, FormGroup } from "reactstrap";
-
+import moment from "moment";
 import {
   Block,
   BlockHead,
@@ -10,210 +10,135 @@ import {
   BlockTitle,
   Row,
   Col,
+  PaginationComponent
 } from "../components/Component";
-import MainWallets from "../components/partials/analytics/dashboard-wallet/MainWallets";
+import { kycData } from "../components/partials/KycData";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-import OrphanTnx from "../components/partials/analytics/dashboard-transaction/OrphanTnx";
-import { DashboardAnalytics } from "../components/partials/analytics/dashboard-analytics";
-import TnxAnalytics from "../components/partials/analytics/dashboard-transaction";
-import LatestIncomingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestIncomingTrans";
-import LatestOutgoingTrans from "../components/partials/analytics/dashboard-latest-transactions/latestOutgoingTrans";
 
 const Homepage = () => {
   const [timeFrame, setSelectedTimeFrame] = useState("1month");
   const [showModal, setShowModal] = useState(false);
   const [date, setDate] = useState({ startDate: null, endDate: null })
-  const [formData, setFormData] = useState({
-    endDate: new Date(),
-    startDate: new Date(),
+  const [searchText, setSearchText] = useState("");
+  const [userID, setUserID] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemPerPage] = useState(10);
+  const [data, setData] = useState(kycData);
 
-  });
+  // Get current list, pagination
+  const indexOfLastItem = currentPage * itemPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-
-  const handleTimeFrameChange = (value) => {
-    setSelectedTimeFrame(value);
-  };
-
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <React.Fragment>
-      <Head title="Dashboard" />
+      <Head title="User List" />
       <Content>
-        {/* <DashboardAnalytics /> */}
 
-        {/* MAIN WALLETS */}
+        <Card className="card-bordered card-stretch position-relative" style={{ top: 'auto' }}>
+          <div className="card-inner-group">
+            <div className="card-inner">
+              <div className="card-title-group">
+                <div className="card-title">
+                  <h5 className="title">User List</h5>
+                </div>
 
-        <MainWallets />
-
-
-        {/* IDRT Transactions Overview */}
-        <BlockHead size="sm" className="d-flex justify-content-between pt-3">
-          <div className="nk-block-between">
-            <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                IDRT Transactions Overview
-              </BlockTitle>
-            </BlockHeadContent>
-          </div>
-          <div className="card-tools shrink-0 d-none d-sm-block mr-5">
-            <ul className="nav nav-switch-s2 nav-tabs bg-white">
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "today" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("today");
-                  }}
-                >
-                  Today
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "7days" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("7days");
-                  }}
-                >
-                  7 D
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "1month" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("1month");
-                  }}
-                >
-                  1 M
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "monthToDate" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("monthToDate");
-                  }}
-                >
-                  MTD
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "1year" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("1year");
-                  }}
-                >
-                  1 Y
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#navitem"
-                  className={timeFrame === "yearToDate" ? "nav-link active" : "nav-link"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleTimeFrameChange("yearToDate");
-                  }}
-                >
-                  YTD
-                </a>
-              </li>
-
-
-              <li>
-                <Button
-                  className="ml-2 toggle d-none d-md-inline-flex"
-                  color="primary"
-                  size="sm"
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  <span>Edit Date</span>
-                </Button>
-              </li>
-            </ul>
-          </div>
-        </BlockHead>
-
-        {/* Transaction Analytics And Charts */}
-        <TnxAnalytics timeFrame={timeFrame} date={date} />
-
-        {/* ORPHAN TRANSACTIONS */}
-        <OrphanTnx />
-
-        {/* LATEST INCOMING TRANSACTIONS */}
-        <LatestIncomingTrans />
-
-        {/* LATEST OUTGOING TRANSACTIONS */}
-        <LatestOutgoingTrans />
-
-
-
-
-        <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)} className="modal-dialog-centered" size="sm">
-          <ModalHeader toggle={() => setShowModal(false)}>
-            Date Filter
-          </ModalHeader>
-          <ModalBody>
-            <div >
-              <Row className="g-3">
-                <Col md="6">
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="startDate">
-                      Start Date
-                    </label>
-                    <FormGroup>
-                      <div className="form-control-wrap">
-                        <input type="date" className="form-control" id="startDate" defaultValue={formData.startDate} selected={formData.startDate}
-
-                          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
-                      </div>
-                    </FormGroup>
-                    {/* {errors.startDate && <span className="invalid">{errors.startDate.message}</span>} */}
-                  </div>
-                </Col>
-                <Col md="6">
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="endDate">
-                      End Date
-                    </label>
-                    <FormGroup>
-                      <div className="form-control-wrap">
-                        <input type="date" className="form-control" id="endDate" defaultValue={formData.endDate} selected={formData.endDate}
-
-                          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} />
-                      </div>
-                    </FormGroup>
-                    {/* {errors.endDate && <span className="invalid">{errors.endDate.message}</span>} */}
-                  </div>
-                </Col>
-                <Col size="12">
-                  <Button color="primary" type="submit" onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedTimeFrame('customRange')
-                    setDate(formData);
-                    setShowModal(false);
-                  }}>
-                    <span>Filter</span>
-                  </Button>
-                </Col>
-              </Row>
+              </div>
             </div>
-          </ModalBody >
-        </Modal >
+            <div className="card-inner p-o">
+              <table className="table w-100 d-table table-hover table-responsive">
+                <thead>
+                  <tr className="tb-tnx-head">
+                    <th className="tb-tnx-id">
+                      <span className="">ID</span>
+                    </th>
+                    <th className="">
+                      <span>User</span>
+                    </th>
+                    <th className="">
+                      <span>Doc Type</span>
+                    </th>
+                    <th className="">
+                      <span>Date</span>
+                    </th>
+
+
+                    <th className="">
+                      <span className="">Status</span>
+                    </th>
+
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems?.length > 0
+                    ? currentItems?.map((item) => {
+                      return (
+                        <tr key={item.id} className="">
+                          <td className="tb-tnx font-weight-bold">
+                            <Link to={`user?id=${item.id}`}>
+                              <div className="text-truncate" style={{ maxWidth: '100px' }}>{item.id}</div>
+                            </Link>
+                          </td>
+                          <td className="tb-tnx font-weight-bold">
+                            <div>{item.name}</div>
+                          </td>
+                          <td className="tb-tnx font-weight-bold">
+                            <div>{item.doc}</div>
+                          </td>
+                          <td className="">
+                            <span className="date">
+                              <div className="d-flex">
+                                {" "}
+                                <div>{moment(item?.date).format("DD/MM/YYYY")}</div>
+
+                                <div className="ml-2">
+                                  {" "}
+                                  {moment(item?.date).format("HH:mm ")}
+                                </div>
+                              </div>
+                            </span>
+                          </td>
+
+                          <td className="tb-info">
+                            <span
+                              className={`tb-status text-${item.status === "Approved" ? "success" : item.status === "Pending" ? "info" : item.status === "Rejected" ? "danger" : "secondary"
+                                }`}
+                            >
+                              {item.status}
+                            </span>
+                          </td>
+
+
+
+                        </tr>
+                      );
+                    })
+                    : null}
+                </tbody>
+              </table>
+            </div>
+            <div className="card-inner">
+              {currentItems?.length > 0 ? (
+                <PaginationComponent
+                  noDown
+                  itemPerPage={itemPerPage}
+                  totalItems={data?.length}
+                  paginate={paginate}
+                  currentPage={currentPage}
+                />
+              ) : (
+                <div className="text-center">
+                  <span className="text-silent">No data found</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </Card>
       </Content >
     </React.Fragment >
   );
